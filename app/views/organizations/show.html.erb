@@ -1,0 +1,27 @@
+<a href="/users/<%=session[:user_id]%>">Dashboard</a>
+<h1><%=@org.name%></h1>
+<h4><%=@org.description%></h4>
+
+<% if @org.user_members.include?(current_user) %>
+  <h2>This will be a leave button</h2>
+  <form action="/members/<%=@org.find_member_id(current_user)%>" method="post">
+    <input type="hidden" name="organization_id" value="<%=@org.id%>">
+    <input type="hidden" name="user_id" value="<%=session[:user_id]%>">
+    <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Leave Organization">
+  </form>
+<% else %>
+  <h2>This will be a join button</h2>
+  <form action="/members" method="post">
+    <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+    <input type="hidden" name="organization_id" value="<%=@org.id%>">
+    <input type="submit" value="Join Organization">
+  </form>
+<%end%>
+
+<% if @user==current_user.first_name %>
+  <h4>Created by: YOU!</h4>
+<%else%>
+  <h4>Created by: <%=@user%></h4>
+<%end%>

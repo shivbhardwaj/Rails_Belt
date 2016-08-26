@@ -1,0 +1,37 @@
+<h1>Welcome, <%= @user.first_name %> </h1>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |e| %>
+    <p><%= e %></p>
+  <% end %>
+<% end %>
+
+
+<h3>Here are some organizations for you to join:</h3>
+
+<% @organizations.each do |o| %>
+  <hr>
+  <h3><a href="/organizations/<%=o.id%>"><%=o.name%></a></h3>
+  <p>Members: <%=o.members.count%></p>
+  <p><%=o.description%></p>
+  <!-- logic to show delete if you created org goes here. -->
+  <% if @user.id == o.user_id %>
+    <form action="/organizations/<%=o.id%>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="Delete">
+    </form>
+  <%end%>
+<%end%>
+
+<fieldset style="width:30%">
+  <h2>Create a new organization:</h2>
+  <form action="/organizations" method="post">
+    <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+    <p><label for="name">Organization Name: </label>
+    <input type="text" id='name' name='name'></p>
+    <p><label for="description">Description: </label>
+    <input type="text" id='description' name='description'></p>
+    <input type="submit" value="Create">
+  </form>
+</fieldset>

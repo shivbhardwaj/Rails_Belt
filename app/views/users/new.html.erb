@@ -1,0 +1,17 @@
+<h1>Welcome!</h1>
+
+<h2>Register</h2>
+<form action="/users" method="post">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+  <p><label for="first_name">First Name: </label>
+  <input type="text" id='first_name' name="user[first_name]"></p>
+  <p><label for="last_name">Last Name: </label>
+  <input type="text" id='last_name' name="user[last_name]"></p>
+  <p><label for="email">Email: </label>
+  <input type="text" id='email' name="user[email]"></p>
+  <p><label for="password">Password: </label>
+  <input type="text" id='password' name="user[password]"></p>
+  <input type="submit" value="Register">
+</form>
+<br>
+<a href="/sessions/new">Log In</a>
